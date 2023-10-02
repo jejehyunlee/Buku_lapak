@@ -1,0 +1,11 @@
+#app:
+#  name: spring boot application
+#  api:
+#    title: Spring Boot APIs
+#    version: 1.0.0
+#    description: Spring Boot APIs description
+#    base-package: com.abc.controller
+#    contact-name: apisupportgroup
+#    contact-email: apisupportgroup@abc.com
+#    swagger:
+#      enable: true
