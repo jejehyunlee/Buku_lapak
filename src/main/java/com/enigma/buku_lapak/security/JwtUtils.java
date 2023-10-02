@@ -21,9 +21,9 @@ import java.util.Date;
 @Slf4j
 public class JwtUtils {
 
-    @Value("")
+    @Value("${bukulapak.jwt.secret}")
     private String jwtSecret;
-    @Value("")
+    @Value("${bukulapak.jwt.expiration}")
     private Long jwtExpired;
 
     public String getEmailByToken(String token){
@@ -47,15 +47,15 @@ public class JwtUtils {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
             return true;
-        }catch (MalformedJwtException jwtException){
-            log.error(jwtException.getMessage() + "JWT Invalid Token {}");
-        }catch (ExpiredJwtException expiredJwtException){
-            log.error(expiredJwtException.getMessage() + "JWT Is Expired {}");
-        } catch (UnsupportedJwtException unsupportedJwtException){
-        log.error(unsupportedJwtException.getMessage() + "JWT Is Unsupport {}");
-        } catch (IllegalArgumentException illegalArgumentException){
-        log.error(illegalArgumentException.getMessage() + "JWT Claims is Empty {}");
-    }
+                }catch (MalformedJwtException jwtException){
+                    log.error(jwtException.getMessage() , "JWT Invalid Token {}");
+                }catch (ExpiredJwtException expiredJwtException){
+                    log.error(expiredJwtException.getMessage() , "JWT Is Expired {}");
+                }catch (UnsupportedJwtException unsupportedJwtException){
+                    log.error(unsupportedJwtException.getMessage() , "JWT Is Unsupport {}");
+                }catch (IllegalArgumentException illegalArgumentException){
+                    log.error(illegalArgumentException.getMessage() , "JWT Claims is Empty {}");
+                }
         return false;
     }
 
