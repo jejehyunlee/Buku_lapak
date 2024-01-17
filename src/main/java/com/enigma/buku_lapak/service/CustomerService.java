@@ -22,7 +22,7 @@ import java.util.List;
 
 @Service
 public interface CustomerService {
-    CustomerResponse create(CustomerRequest customerRequest);
+    Customer create(Customer customer);
     Customer getById(String id);
     List<Customer> getAll(String mesage, HttpStatus httpStatus);
     Customer update(CustomerRequest customerRequest);

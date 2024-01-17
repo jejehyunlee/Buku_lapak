@@ -11,6 +11,7 @@ Version 1.0
 */
 
 import com.enigma.buku_lapak.entity.Store;
+import com.enigma.buku_lapak.model.response.CommonResponse;
 import com.enigma.buku_lapak.service.impl.StoreServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class StoreController {
     private final StoreServiceImpl storeService;
 
     @PostMapping(value = "/v1/add")
-    public Store storeCreate(@RequestBody Store store) {
+    public CommonResponse<Object> storeCreate(@RequestBody Store store) {
         return storeService.create(store);
     }
 

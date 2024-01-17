@@ -35,11 +35,11 @@ public class CustomerController {
 
     @PostMapping(
             path = "/v2/add")
-    public ResponseEntity<?> create(@RequestBody CustomerRequest customerRequest) {
-        CustomerResponse customerResponse = customerService.create(customerRequest);
+    public ResponseEntity<?> create(@RequestBody Customer customerRequest) {
+        Customer customerResponse = customerService.create(customerRequest);
         return ResponseEntity.status(HttpStatus.OK.value())
                 .body(CommonResponse
-                .<CustomerResponse>builder()
+                .<Customer>builder()
                 .httpStatus(HttpStatus.OK)
                 .statusCode(HttpStatus.CREATED.value())
                 .message("Success Create")
@@ -92,8 +92,8 @@ public class CustomerController {
     public DeleteResponse customerDelete(@PathVariable String id) {
          Customer customer = customerService.deleteById(id);
             return DeleteResponse.builder()
-                    .httpStatus(HttpStatus.NOT_FOUND)
-                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .httpStatus(HttpStatus.OK)
+                    .statusCode(HttpStatus.OK.value())
                     .message("Berhasil dihapus")
                     .build();
     }

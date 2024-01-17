@@ -10,6 +10,7 @@ Created On 10/2/2023 15:00
 Version 1.0
 */
 
+import com.enigma.buku_lapak.config.LoggingConfig;
 import com.enigma.buku_lapak.entity.Customer;
 import com.enigma.buku_lapak.entity.Role;
 import com.enigma.buku_lapak.entity.UserCredential;
@@ -17,6 +18,7 @@ import com.enigma.buku_lapak.entity.UserDetailImpl;
 import com.enigma.buku_lapak.entity.constant.ERole;
 import com.enigma.buku_lapak.model.request.AuthRequest;
 import com.enigma.buku_lapak.model.request.CustomerRequest;
+import com.enigma.buku_lapak.model.request.LoginRequest;
 import com.enigma.buku_lapak.model.request.RegisterSellerRequest;
 import com.enigma.buku_lapak.model.response.LoginResponse;
 import com.enigma.buku_lapak.model.response.RegisterResponse;
@@ -26,6 +28,8 @@ import com.enigma.buku_lapak.security.JwtUtils;
 import com.enigma.buku_lapak.service.AuthService;
 import com.enigma.buku_lapak.service.CustomerService;
 import com.enigma.buku_lapak.service.RoleService;
+import com.enigma.buku_lapak.service.ValidationService;
+import com.enigma.buku_lapak.utils.LoggingFile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -46,6 +50,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
+    private final ValidationService validationService;
+
+    private String[] strExceptionArr = new String[2];
+
     private final UserCredentialRepository userCredentialRepository;
 
     private final AuthenticationManager authenticationManager;
@@ -61,6 +69,7 @@ public class AuthServiceImpl implements AuthService {
     @Transactional(rollbackOn = Exception.class)
     @Override
     public RegisterResponse register(AuthRequest authRequest) {
+        validationService.validate(authRequest);
         try {
             Role role = roleService.getOrSave(ERole.ROLE_CUSTOMER);
             UserCredential userCredential = UserCredential.builder()
@@ -83,8 +92,10 @@ public class AuthServiceImpl implements AuthService {
                 .build();
 
         } catch (DataIntegrityViolationException e){
-            throw new ResponseStatusException(HttpStatus.CONFLICT,"User Already Exist");
-
+            strExceptionArr[0] = "AuthServiceImpl Class";
+            strExceptionArr[1] = "registerNewCustomer(RegisterCustomerRequest request) --- LINE 54";
+            LoggingFile.exceptionStringz(strExceptionArr, e, LoggingConfig.getFlagLogging());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"User Already Exist");
         }
 
     }
@@ -100,10 +111,10 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public LoginResponse login(AuthRequest authRequest) {
+    public LoginResponse login(LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                authRequest.getEmail(),
-                authRequest.getPassword()
+                loginRequest.getUsername(),
+                loginRequest.getPassword()
         ));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);

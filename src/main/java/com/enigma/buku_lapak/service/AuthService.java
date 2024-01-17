@@ -12,6 +12,7 @@ Version 1.0
 
 
 import com.enigma.buku_lapak.model.request.AuthRequest;
+import com.enigma.buku_lapak.model.request.LoginRequest;
 import com.enigma.buku_lapak.model.request.RegisterSellerRequest;
 import com.enigma.buku_lapak.model.response.LoginResponse;
 import com.enigma.buku_lapak.model.response.RegisterResponse;
@@ -24,6 +25,6 @@ public interface AuthService {
 
     RegisterResponse registerSeller(RegisterSellerRequest registerSellerRequest);
 
-    LoginResponse login(AuthRequest authRequesta);
+    LoginResponse login(LoginRequest loginRequestequesta);
 
 }

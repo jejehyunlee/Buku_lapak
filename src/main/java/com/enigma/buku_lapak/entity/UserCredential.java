@@ -12,6 +12,7 @@ Version 1.0
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,11 +25,13 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_credential")
+@Builder(toBuilder = true)
+
 public class UserCredential {
     @Id
     @GeneratedValue(generator = "uuid-hibernate-generator")
     @GenericGenerator(name = "uuid-hibernate-generator", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id_user_credential")
+    @Column(name = "user_credential_id")
     private String idUserCredential;
 
     @Column(name = "email", unique = true)
@@ -41,7 +44,7 @@ public class UserCredential {
     @JoinTable(name = "m_user_role",
     joinColumns = @JoinColumn(
             name = "id_user_credential",
-            referencedColumnName = "id_user_credential"
+            referencedColumnName = "user_credential_id"
     ),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id",

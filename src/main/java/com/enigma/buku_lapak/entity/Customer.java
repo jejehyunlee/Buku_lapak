@@ -43,7 +43,7 @@ public class Customer {
     private String email;
 
     @OneToOne
-    @JoinColumn(name = "id_user_credential")
+    @JoinColumn(name = "user_credential_id")
     private UserCredential userCredential;
 
 }

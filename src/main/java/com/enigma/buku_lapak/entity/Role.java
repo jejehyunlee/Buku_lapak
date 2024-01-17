@@ -13,6 +13,7 @@ Version 1.0
 
 import com.enigma.buku_lapak.entity.constant.ERole;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,6 +25,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "m_role")
+@Builder(toBuilder = true)
+
 public class Role {
     @Id
     @GeneratedValue(generator = "uuid-hibernate-generator")
@@ -32,6 +35,6 @@ public class Role {
     private String idRole;
 
     @Enumerated(EnumType.STRING)
-    private ERole eRole;
+    private ERole role;
 
 }

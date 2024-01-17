@@ -91,7 +91,7 @@ public class ProductController {
                         .httpStatus(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())
                         .message("Data Found")
-//                        .data(pagingResponse)
+                        .data(pagingResponse)
                         .pagingResponse(pagingResponse)
                         .build());
 

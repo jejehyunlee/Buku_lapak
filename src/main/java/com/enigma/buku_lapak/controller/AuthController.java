@@ -11,6 +11,7 @@ Version 1.0
 */
 
 import com.enigma.buku_lapak.model.request.AuthRequest;
+import com.enigma.buku_lapak.model.request.LoginRequest;
 import com.enigma.buku_lapak.model.response.CommonResponse;
 import com.enigma.buku_lapak.model.response.LoginResponse;
 import com.enigma.buku_lapak.model.response.RegisterResponse;
@@ -23,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import java.util.Optional;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
@@ -31,9 +35,10 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerCustomer(@RequestBody AuthRequest request) {
+    public ResponseEntity<?> registerCustomer(@Valid @RequestBody AuthRequest request) {
         RegisterResponse register = authService.register(request);
         CommonResponse<Object> response = CommonResponse.builder()
+                .httpStatus(HttpStatus.CREATED)
                 .statusCode(HttpStatus.CREATED.value())
                 .message("successfully registered")
                 .data(register)
@@ -43,9 +48,10 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         LoginResponse loginResponse = authService.login(request);
         CommonResponse<Object> response = CommonResponse.builder()
+                .httpStatus(HttpStatus.CREATED)
                 .statusCode(HttpStatus.CREATED.value())
                 .message("Successfully Login")
                 .data(loginResponse)

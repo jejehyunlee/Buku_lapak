@@ -12,6 +12,7 @@ Version 1.0
 
 
 import com.enigma.buku_lapak.entity.Store;
+import com.enigma.buku_lapak.model.response.CommonResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 @Service
 public interface StoreService {
 
-    Store create(Store store);
+    CommonResponse<Object> create(Store store);
     Store getById(String id);
     List<Store> getAll();
     Store update(Store store);

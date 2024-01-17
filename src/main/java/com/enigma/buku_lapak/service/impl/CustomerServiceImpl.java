@@ -30,20 +30,25 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional(rollbackOn = Exception.class)
     @Override
-    public CustomerResponse create(CustomerRequest request) {
+    public Customer create(Customer request) {
                 Customer customer = Customer.builder()
                         .idCustomer(request.getIdCustomer())
                         .nameCustomer(request.getNameCustomer())
                         .address(request.getAddress())
                         .mobilePhoneCustomer(request.getMobilePhoneCustomer())
                         .email(request.getEmail())
+                        .userCredential(request.getUserCredential())
                         .build();
                  customerRepository.saveAndFlush(customer);
 
 
-        return CustomerResponse.builder()
+        return Customer.builder()
                 .idCustomer(customer.getIdCustomer())
-                .customerName(customer.getNameCustomer())
+                .nameCustomer(customer.getNameCustomer())
+                .address(customer.getAddress())
+                .mobilePhoneCustomer(customer.getMobilePhoneCustomer())
+                .email(customer.getEmail())
+                .userCredential(customer.getUserCredential())
                 .build();
     }
 

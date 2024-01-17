@@ -12,17 +12,25 @@ Version 1.0
 
 import lombok.*;
 
-@Data
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class AuthRequest {
+
+    @Email(message = "email not valid")
+    @NotBlank
     private String email;
+    @NotBlank(message = "Password tidak boleh kosong")
     private String password;
+    @NotBlank(message = "Nama tidak boleh kosong")
     private String name;
+    @NotBlank(message = "Alamat tidak boleh kosong")
     private String address;
+    @NotBlank(message = "No. HP tidak boleh kosong")
     private String mobilePhone;
 
 }

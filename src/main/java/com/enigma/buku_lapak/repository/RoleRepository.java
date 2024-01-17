@@ -14,12 +14,11 @@ Version 1.0
 import com.enigma.buku_lapak.entity.Role;
 import com.enigma.buku_lapak.entity.constant.ERole;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.Optional;
 
-public interface RoleRepository extends JpaRepository<Role, String> {
-
-
+public interface RoleRepository extends JpaRepository<Role, String>, JpaSpecificationExecutor<Role> {
     Optional<Role> findByRole(ERole role);
 
 }
